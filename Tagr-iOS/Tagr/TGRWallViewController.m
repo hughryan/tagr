@@ -69,6 +69,12 @@ TGRWallPostCreateViewControllerDataSource>
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+	
+	// Get permission to access the user's location
+	if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+	{
+		[self.locationManager requestWhenInUseAuthorization];
+	}
 
     [self loadWallPostsTableViewController];
 
@@ -276,9 +282,9 @@ TGRWallPostCreateViewControllerDataSource>
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     switch (status) {
-        case kCLAuthorizationStatusAuthorized:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
         {
-            NSLog(@"kCLAuthorizationStatusAuthorized");
+            NSLog(@"kCLAuthorizationStatusAuthorizedWhenInUse");
             // Re-enable the post button if it was disabled before.
             self.navigationItem.rightBarButtonItem.enabled = YES;
             [self.locationManager startUpdatingLocation];

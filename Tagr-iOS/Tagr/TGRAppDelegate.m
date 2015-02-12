@@ -35,7 +35,13 @@ TGRSettingsViewControllerDelegate>
     // ****************************************************************************
 
     // Set the global tint on the navigation bar
-    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:43.0f/255.0f green:181.0f/255.0f blue:46.0f/255.0f alpha:1.0f]];
+    //[[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:43.0f/255.0f green:181.0f/255.0f blue:46.0f/255.0f alpha:1.0f]];
+	
+	// Get permission to obtain the user's location
+	//if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+	//{
+	//	[self.locationManager requestWhenInUseAuthorization];
+	//}
 
     // Setup default NSUserDefaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
