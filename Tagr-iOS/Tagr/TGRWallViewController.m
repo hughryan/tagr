@@ -378,7 +378,15 @@ TGRWallPostCreateViewControllerDataSource>
         pinView.pinColor = [(TGRPost *)annotation pinColor];
         pinView.animatesDrop = [((TGRPost *)annotation) animatesDrop];
         pinView.canShowCallout = YES;
-
+		
+		UIButton *reportButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	    [reportButton setTitle:@"Report" forState:UIControlStateNormal];
+		[reportButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+		[reportButton sizeToFit];
+		reportButton.titleLabel.font = [UIFont systemFontOfSize:10];
+		
+		pinView.rightCalloutAccessoryView = reportButton;
+		
         return pinView;
     }
 
