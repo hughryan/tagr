@@ -30,6 +30,9 @@ static NSString * const TGRParsePostUsernameKey = @"username";
 static NSString * const TGRParsePostTextKey = @"text";
 static NSString * const TGRParsePostLocationKey = @"location";
 static NSString * const TGRParsePostNameKey = @"name";
+static NSString * const TGRParseReportsClassName = @"Reports";
+static NSString * const TGRParseReportPostKey = @"post";
+static NSString * const TGRParseReportUserKey = @"user";
 
 // NSNotification userInfo keys:
 static NSString * const kTGRFilterDistanceKey = @"filterDistance";

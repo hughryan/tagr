@@ -9,6 +9,7 @@
 #import "TGRPost.h"
 #import "TGRWallPostCreateViewController.h"
 #import "TGRWallPostsTableViewController.h"
+#import "TGRReportUIButton.h"
 
 @interface TGRWallViewController ()
 <TGRWallPostsTableViewControllerDataSource,
@@ -355,7 +356,7 @@ TGRWallPostCreateViewControllerDataSource>
     return nil;
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapVIew viewForAnnotation:(id<MKAnnotation>)annotation {
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     // Let the system handle user location annotations.
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
@@ -365,8 +366,10 @@ TGRWallPostCreateViewControllerDataSource>
 
     // Handle any custom annotations.
     if ([annotation isKindOfClass:[TGRPost class]]) {
+		TGRPost *post = (TGRPost *)annotation;
+		
         // Try to dequeue an existing pin view first.
-        MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapVIew dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
+        MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
 
         if (!pinView) {
             // If an existing pin view was not available, create one.
@@ -379,11 +382,12 @@ TGRWallPostCreateViewControllerDataSource>
         pinView.animatesDrop = [((TGRPost *)annotation) animatesDrop];
         pinView.canShowCallout = YES;
 		
-		UIButton *reportButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+		TGRReportUIButton *reportButton = [TGRReportUIButton buttonWithType:UIButtonTypeRoundedRect withPost:post];
 	    [reportButton setTitle:@"Report" forState:UIControlStateNormal];
 		[reportButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 		[reportButton sizeToFit];
 		reportButton.titleLabel.font = [UIFont systemFontOfSize:10];
+		[reportButton addTarget:self action:@selector(reportPost:) forControlEvents:UIControlEventTouchUpInside];
 		
 		pinView.rightCalloutAccessoryView = reportButton;
 		
@@ -391,6 +395,49 @@ TGRWallPostCreateViewControllerDataSource>
     }
 
     return nil;
+}
+
+- (void)reportPost:(id)sender {
+	TGRReportUIButton *button = (TGRReportUIButton*)sender;
+	PFObject *post = button.post.object;
+	
+	PFUser *user = [PFUser currentUser];
+	
+	// Stitch together a postObject and send this async to Parse
+	PFObject *postObject = [PFObject objectWithClassName:TGRParseReportsClassName];
+	[postObject setObject:post forKey:TGRParseReportPostKey];
+	[postObject setObject:user forKey:TGRParseReportUserKey];
+	
+	// Use PFACL to restrict future modifications to this object.
+	PFACL *readOnlyACL = [PFACL ACL];
+	[readOnlyACL setPublicReadAccess:YES];
+	[readOnlyACL setPublicWriteAccess:NO];
+	postObject.ACL = readOnlyACL;
+	
+	[postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		if (error) {
+			NSLog(@"Couldn't save!");
+			NSLog(@"%@", error);
+			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error userInfo][@"error"]
+																message:nil
+															   delegate:self
+													  cancelButtonTitle:nil
+													  otherButtonTitles:@"Ok", nil];
+			[alertView show];
+			return;
+		}
+		if (succeeded) {
+			NSLog(@"Successfully saved!");
+			NSLog(@"%@", postObject);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"You have reported this post." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+				[alert show];
+			});
+		} else {
+			NSLog(@"Failed to save.");
+		}
+	}];
+	
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C849D3A7B5B61E3ACDA5582 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 676C4B8E833C099D68168D3F /* libPods.a */; };
+		576DB7451ABC73FB0070FFAF /* TGRReportUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 576DB7431ABC73FB0070FFAF /* TGRReportUIButton.m */; };
 		57F3264E1A8C4170006F7965 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F3264D1A8C4170006F7965 /* Default-568h@2x.png */; };
 		8136F91419B9EA1900F29B59 /* TGRConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8136F91319B9EA1900F29B59 /* TGRConfigManager.m */; };
 		81B86B951995829100222BAB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81B86B941995829100222BAB /* Images.xcassets */; };
@@ -42,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		576DB7431ABC73FB0070FFAF /* TGRReportUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRReportUIButton.m; sourceTree = "<group>"; };
+		576DB7441ABC73FB0070FFAF /* TGRReportUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRReportUIButton.h; sourceTree = "<group>"; };
 		57F3264D1A8C4170006F7965 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		66B310860B65D982EDD46EF3 /* Pods.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.distribution.xcconfig; path = "Pods/Target Support Files/Pods/Pods.distribution.xcconfig"; sourceTree = "<group>"; };
 		676C4B8E833C099D68168D3F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,6 +291,8 @@
 			children = (
 				E5CAAFF114D733DC00D97A18 /* TGRWallViewController.h */,
 				E5CAAFF214D733DC00D97A18 /* TGRWallViewController.m */,
+				576DB7431ABC73FB0070FFAF /* TGRReportUIButton.m */,
+				576DB7441ABC73FB0070FFAF /* TGRReportUIButton.h */,
 				E5458B6914D8B2E3003BE4FF /* TGRWallPostCreateViewController.h */,
 				E5458B6A14D8B2E3003BE4FF /* TGRWallPostCreateViewController.m */,
 				E572726914E0807F004A9423 /* TGRWallPostsTableViewController.h */,
@@ -414,6 +419,7 @@
 				E5CAAFF414D733DC00D97A18 /* TGRWallViewController.m in Sources */,
 				E5458B6614D77BEA003BE4FF /* TGRSettingsViewController.m in Sources */,
 				E5458B6C14D8B2E3003BE4FF /* TGRWallPostCreateViewController.m in Sources */,
+				576DB7451ABC73FB0070FFAF /* TGRReportUIButton.m in Sources */,
 				E5C3305014DA024F00089B64 /* TGRLoginViewController.m in Sources */,
 				E5E3D1F214DA20220074DA18 /* TGRNewUserViewController.m in Sources */,
 				81E5F12C1997DB240079429B /* TGRPostTableViewCell.m in Sources */,
